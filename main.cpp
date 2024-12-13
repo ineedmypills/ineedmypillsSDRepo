@@ -24,7 +24,7 @@ int main()
 	
 
 	std::ofstream ArrayToRead;
-	ArrayToRead.open(fileName, std::ofstream::out);
+	ArrayToRead.open(fileName);
 	if (ArrayToRead.is_open())
 	{
 		ArrayToRead << "namesArray=";
@@ -60,19 +60,18 @@ int main()
 
 
 	std::ifstream ArrayToWrite;
-	ArrayToWrite.open(fileName, std::ofstream::out);
-
-	std::string data;
+	ArrayToWrite.open(fileName);
 
 	if (ArrayToWrite.is_open())
 	{
 		for (size_t i = 0; i < size; i++)
 		{
-			std::getline(ArrayToRead, namesWriteArray[i], ',');
+			std::getline(ArrayToWrite, namesWriteArray[i], '\n');
+
 		}
 		for (size_t i = 0; i < size; i++)
 		{
-			std::getline(ArrayToRead, priceWriteArray[i], ',');
+			std::getline((ArrayToWrite), priceWriteArray[i], '\n');
 		}
 	}
 	else
