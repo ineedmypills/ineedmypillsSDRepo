@@ -1,0 +1,2 @@
+namesArray=Дошик,Дошим,Додо
+priceArray=65,96,150

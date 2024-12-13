@@ -1,102 +1,85 @@
 #include <iostream>
 #include <Windows.h>
+#include <cstdlib>
+#include <fstream>
+#include <string>
 
 
 int main()
 {
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
+	srand(time(NULL));
 
-	/*
-	double one, two;
+	const int size = 3;
+	const int newSize = 4;
 
-	std::cout << "Первое число: ";
-	std::cin >> one;
-	std::cout << "Второе число: ";
-	std::cin >> two;
-	std::cout << "\nСумма: " << one + two;
-	std::cout << "\nРазность: " << one - two;
-	std::cout << "\nПроизведение: " << one * two;
-	std::cout << "\nЧастное: " << one / two;
-	*/
-	/*double one, two, three;
-	double onePrice = 1200, twoPrice = 2200, threePrice = 5000;
+	std::string fileName = "file.txt";
 
-	std::cout << "Сколько чайников купить? (" << onePrice << "р): ";
-	std::cin >> one;
-	std::cout << "Сколько утюгов купить? (" << twoPrice << "р): ";
-	std::cin >> two;
-	std::cout << "Сколько холодильников купить? (" << threePrice << "р): ";
-	std::cin >> three;
-	double oneSum = one * onePrice;
-	double twoSum = two * twoPrice;
-	double threeSum = three * threePrice;
-	double totalSum = oneSum + twoSum + threeSum;
+	std::string namesReadArray[size]{"Дошик", "Дошим", "Додо"};
+	double priceReadArray[size]{ 65,96,150 };
 
-	std::cout << "\nСумма за чайники: " << oneSum;
-	std::cout << "\nСумма за утюги: " << twoSum;
-	std::cout << "\nСумма за холодильники: " << threeSum;
-	std::cout << "\nИтого: " << totalSum;
-	std::cout << "\n";
-	*/
-	/*int a;
-	std::cin >> a;
-	if (a > 0)
+	std::string namesWriteArray[newSize]{};
+	double priceWriteArray[newSize]{};
+	
+
+	std::ofstream ArrayToRead;
+	ArrayToRead.open(fileName, std::ofstream::out);
+	if (ArrayToRead.is_open())
 	{
-		std::cout << "Повар\n";
-	}
-	else if (a < 0)
-	{
-		std::cout << "Котик\n";
+		ArrayToRead << "namesArray=";
+		for (int i = 0; i < size; i++)
+		{
+			if (i == 0) {
+				ArrayToRead << namesReadArray[i];
+			}
+			else
+			{
+				ArrayToRead << "," << namesReadArray[i];
+			}
+		}
+		ArrayToRead << "\n";
+		ArrayToRead << "priceArray=";
+		for (int i = 0; i < size; i++)
+		{
+			if (i == 0) {
+				ArrayToRead << priceReadArray[i];
+			}
+			else
+			{
+				ArrayToRead << "," << priceReadArray[i];
+			}
+		}
 	}
 	else
 	{
-		std::cout << "Ыыыыы\n";
+		std::cerr << "Err\n";
 	}
-	*/
+	ArrayToRead.close();
 
-	char oper;
-	double num1;
-	double num2;
 
-	std::cout << "Первое число: ";
-	std::cin >> num1;
-	std::cout << "Действие: ";
-	std::cin >> oper;
-	std::cout << "Второе число: ";
-	std::cin >> num2;
-	if (oper == '+')
+
+	std::ifstream ArrayToWrite;
+	ArrayToWrite.open(fileName, std::ofstream::out);
+
+	std::string data;
+
+	if (ArrayToWrite.is_open())
 	{
-		std::cout << "\nСумма: " << num1 + num2 << "\n";
-	}
-	else if (oper == '-')
-	{
-		std::cout << "\nРазность: " << num1 - num2 << "\n";
-	}
-	else if (oper == '*')
-	{
-		std::cout << "\nПроизведение: " << num1 * num2 << "\n";
-	}
-	else if (oper == '/')
-	{
-		if (num2 != 0)
-			std::cout << "\nЧастное: " << num1 / num2 << "\n";
-		else
-			std::cout << "\nНа ноль делить нельзя!\n";
-	}
-	else if (oper == '%')
-	{
-		if ((num1 < 0 && num2 >=0) || (num1 >= 0 && num2 < 0))
-			std::cout << "\nПроцент не может быть отрицательным\n";
-		else
-			std::cout << "\nПроцент от числа: " << num1 * num2 * 0.01 << "\n";
+		for (size_t i = 0; i < size; i++)
+		{
+			std::getline(ArrayToRead, namesWriteArray[i], ',');
+		}
+		for (size_t i = 0; i < size; i++)
+		{
+			std::getline(ArrayToRead, priceWriteArray[i], ',');
+		}
 	}
 	else
 	{
-		std::cout << "\nГовно. Переделывай.\n";
+		std::cerr << "Err\n";
 	}
-
-
+	ArrayToWrite.close();
 
 	return 0;
 }
